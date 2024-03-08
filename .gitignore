@@ -1,0 +1,4 @@
+.env
+.auditando_ariadne
+__pycache__/
+.pytest_cache__/
