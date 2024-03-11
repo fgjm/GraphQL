@@ -13,7 +13,7 @@ from api.graphql.mutation.order import OrderCreateInput
 from api.graphql.cache import load_cache
 from api.graphql.mutation.uploadFile import queed_files
 from .notification import list_notification
-from api.utilities import get_error
+from logs import get_error
 
 class Mutation(ObjectType):        
     __schema__ = gql( """

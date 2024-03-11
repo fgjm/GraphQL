@@ -2,8 +2,6 @@
 
 from ariadne_graphql_modules  import ObjectType, ScalarType, gql, DirectiveType
 
-from api.resolvers.queries import get_dollar_now
-
 from .user import UserType
 
 
@@ -63,12 +61,3 @@ class LicenseType(ObjectType):
     __aliases__ = {
         "license_name": "NAME"
     }
-
-    @staticmethod
-    async def resolve_revenue(obj, *_):
-        '''se le puede pasar valores a un campo en especifico como cambio pesos a dolares'''
-        DEFAULT_CURRENCY='USD'
-        trm=get_dollar_now()
-        factor_trm=trm if trm else 3900
-        dollars=float(obj['pesos_col'])/factor_trm if 'pesos_col' in obj else 0
-        return {"amount": dollars, "currency": DEFAULT_CURRENCY}

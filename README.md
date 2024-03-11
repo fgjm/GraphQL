@@ -69,7 +69,8 @@ en la carpeta raíz
 pylint_runner
 
 ## Tech Stack
-
+https://ariadnegraphql.org/
+https://www.starlette.io/
 **Server:** Python, uvicorn, ariadne, broadcast
 
 

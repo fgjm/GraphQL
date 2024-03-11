@@ -2,7 +2,7 @@ import sys
 import json
 import http.client
 from httpx import AsyncClient, Request
-from api.utilities import get_error
+from logs import get_error
 
 
 def validate_error(response):
@@ -32,7 +32,6 @@ async def send_request(data):
         )        
         async with AsyncClient() as client:
             response =  await client.send(request)
-            print(' -send_request:',response.text,'|')
             return validate_error(response)
     except:
         return get_error('send_request, REST',sys.exc_info())

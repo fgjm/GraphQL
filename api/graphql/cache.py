@@ -1,7 +1,7 @@
 ''' CURD cache grapgql - context'''
 import sys
 
-from api.utilities import get_error
+from logs import get_error
 
 def load_cache(info,data,service):
     try:

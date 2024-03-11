@@ -1,8 +1,8 @@
 ''' notification creation '''
 import sys
-from api.utilities import get_error
+from logs import get_error
 from api.resolvers import send_request
-from logs.routes import do_log
+from logs import do_log
 
 queed_files = []
 

@@ -4,8 +4,11 @@
     @summary: Core environment variables
 '''
 import os
+from os.path import join, dirname
 from dotenv import load_dotenv
-load_dotenv()
+
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 config = {    
     "HOST_SQL" : os.getenv('HOST_SQL'),
@@ -24,8 +27,7 @@ config = {
     "IP_MARIADB_STATISTICS": os.getenv('IP_MARIADB_STATISTICS'),
     "IP_MARIADB_TRANSACTIONS": os.getenv('IP_MARIADB_TRANSACTIONS'),
     "IP_MARIADB_REPORT": os.getenv('IP_MARIADB_REPORT'),
-    "IP_JELLYFIN": os.getenv('IP_JELLYFIN'),
-    "STRIPE_SECRET_KEY": os.getenv('STRIPE_SECRET_KEY'),
+    "IP_JELLYFIN": os.getenv('IP_JELLYFIN'),   
     "IP_CALLS": os.getenv('IP_CALLS'),
     "IP_CHAT" : os.getenv('IP_CHAT'),
     "IP_CHAT_GROUP"  : os.getenv('IP_CHAT_GROUP')
