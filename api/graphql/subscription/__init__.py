@@ -1,5 +1,11 @@
-''' suscripciones no se puede iniciar con ObjectType como en query y mutation se debe usar SubscriptionType'''
+'''
+    @author: Giovanni Junco
+    @since: 01-03-2024
+    @summary: send requests to all microservices
+'''
+
 import json
+# Subscriptions cannot be started with ObjectType as in query or mutation. SubscriptionType should be used
 from ariadne_graphql_modules  import SubscriptionType
 from api.graphql.query.notification import NotificationType
 

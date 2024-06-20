@@ -4,7 +4,7 @@
     @summary: All tests
 '''
 
-from app import app
+from main import app
 from starlette.testclient import TestClient
 from .queries_users import query_user
 

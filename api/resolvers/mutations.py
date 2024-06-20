@@ -1,4 +1,9 @@
-''' reating, updating or deleting data '''
+'''
+    @author: Giovanni Junco
+    @since: 01-03-2024
+    @summary: send requests to all microservices
+'''
+
 import sys
 import base64
 

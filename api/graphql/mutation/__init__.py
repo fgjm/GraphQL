@@ -1,19 +1,24 @@
-''' si se usa MutationType se debe colocar una mutacion por clase '''
+'''
+    @author: Giovanni Junco
+    @since: 01-03-2024
+    @summary: send requests to all microservices
+'''
 import sys
+#If MutationType is used, one mutation must be placed per class
 from ariadne_graphql_modules  import ObjectType, gql
 from ariadne import QueryType
 
-from api.resolvers import send_request
+from api.resolvers import ResolverRequest
+from api.resolvers.request import queed_files
 from api.graphql.query import DefaultResponseType
 from api.graphql.query.upload import FileType, Upload
 from api.graphql.mutation.user import UserCreateInput
 from api.graphql.mutation.license import LicenseCreateInput
 from api.graphql.mutation.order import OrderCreateInput
 
-from api.graphql.cache import load_cache
-from api.graphql.mutation.uploadFile import queed_files
-from .notification import list_notification
+
 from logs import get_error
+from config import config
 
 class Mutation(ObjectType):        
     __schema__ = gql( """
@@ -42,15 +47,11 @@ class Mutation(ObjectType):
             Load new user in cache
             create notification to user'''
         try:
-            created_user= send_request({
-                "method":"POST",
-                "url":"http://127.0.0.1:5001", 
-                "json":data
-            })
-            if created_user['status']<400:
-                load_cache(info, created_user, 'user_loader')
-                list_notification.append(('user_loader', created_user['id']))
-            return created_user
+            return await ResolverRequest(
+                    data=data, jaeger='createUsersMutation',
+                    context=info.context, url=f"{config['IP_USERS']}/user/",
+                    method='POST'
+                ). resolve_default()
         except:
             return get_error('resolve_users, mutation',sys.exc_info())
         
@@ -63,14 +64,11 @@ class Mutation(ObjectType):
             Load new license in cache
         '''
         try:
-            created_licenses= send_request({
-                "method":"POST",
-                "url":"http://127.0.0.1:5002", 
-                "json":data
-            })
-            if created_licenses['status']<400:
-                load_cache(info, created_licenses, 'licenses_loader')                
-            return created_licenses
+            return await ResolverRequest(
+                    data=data, jaeger='createLicensesMutation',
+                    context=info.context, url=f"{config['IP_LICENSES']}",
+                    method='POST'
+                ). resolve_default()
         except:
             return get_error('resolve_licenses, mutation',sys.exc_info())
     
@@ -80,31 +78,28 @@ class Mutation(ObjectType):
             Load new order in cache
             create notification'''
         try:
-            created_order= send_request({
-                "method":"POST",
-                "url":"http://127.0.0.1:5003", 
-                "json":data
-            })
-            if created_order['status']<400:
-                load_cache(info, created_order, 'order_loader')
-                list_notification.append(('order_loader', created_order['id']))
-            return created_order
+            return await ResolverRequest(
+                    data=data, jaeger='createOrdersMutation',
+                    context=info.context, url=f"{config['IP_ORDERS']}",
+                    method='POST'
+                ).resolve_default()
         except:
             return get_error('resolve_orders, mutation',sys.exc_info())
     
     @staticmethod
-    async def resolve_uploadFiles(*_, files, orderInfo):
+    async def resolve_uploadFiles(_, info, files, orderInfo):
         try:           
             created_file= {
                 "method":"POST",
                 "url":"http://127.0.0.1:5004", 
                 "json": orderInfo,
-                'files': files
+                'files': files,
+                'headers':info.context['headers_token']
             }
             queed_files.append(created_file)            
             return {
-                "status":200,
-                "message": 'Transaction completed',
+                "status":201,
+                "message": 'processing_files'
             }
         except:
             return get_error('uploadFiles, mutation',sys.exc_info())

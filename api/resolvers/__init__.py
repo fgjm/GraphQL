@@ -1,1 +1,1 @@
-from .send_REST import send_request
+from .request import ResolverRequest
