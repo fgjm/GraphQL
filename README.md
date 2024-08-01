@@ -1,20 +1,17 @@
 
 # GrahpQL
 
+Flexible and efficient requests. GraphQL - Ariadne. Frontend Backend Connection. Improve response time.
+
+Queries, Mutations and Asynchronous Subscriptions to organize data. Optimize independent requests from your API. Detailed information through scalable diagrams and modules. 
+
 ![Playground](/home.png)
 
-Flexible and efficient requests. GraphQL - Ariadne. Frontend Backend Connection
-
-![Postman](/home2.png)
-
-Queries, Mutations and Asynchronous Subscriptions to organize data. Optimize independent requests from your API. Detailed information through scalable diagrams and modules.
-Improve response time
-
 ## General diagram
-![general diagram](/diagrama_auditando_co.png)
+![general diagram](/diagrama.png)
 
 ## Specific diagram
-![specific diagram](auditando_co_graphql.png)
+![specific diagram](graphql.png)
 
 ## Environment Variables
 
@@ -46,13 +43,13 @@ Linux
 
 Windows
 ```bash
-  python -m venv .auditando_ariadne
-  .auditando_ariadne\Scripts\activate
+  python -m venv .venv
+  .venv\Scripts\activate
   pip install -r requirements.txt
   uvicorn main:app --host 0.0.0.0 --port 5000 --reload
 ```
 
-## redis
+## Redis
 
 Redis (Remote Dictionary Server) is an open source NoSQL in-memory data store primarily used as an application cache or database
 
@@ -91,25 +88,41 @@ Clear:  flushall  or flushall async
 Get all: todo scan 0
 ```
 
+## Playground
+
+Ariadne brings built-in Playground to test queries and documenting schema
+
+Starlette route link: http://127.0.0.1:5000/graphql/
+
+![Playground](/playground.png)
+
 ## Docker
 
 ### Basic
 
-**Python (require dockerfile in root folder):** docker build -t graphql:v1 .
+**Python (require dockerfile in root folder):** 
+```bash
+docker build -t graphql:v1 .
+```
 
 **Redis:**
+```bash
 docker pull redis
 docker run --name some-redis -p 6379:6379 -d redis
+```
 
-**MongoDB:**
-docker pull mongo
-docker run -it -p27017:27017 --name mongodb -e MONGO_INITDB_ROOT_USERNAME=user -e MONGO_INITDB_ROOT_PASSWORD=password mongo
 
 ### Docker compose
 
-**Start (require docker-compose.yml in root folder):** docker compose up
+**Start (require docker-compose.yml in root folder):** 
+```bash
+docker compose up
+```
 
-**Delete:**	docker compose down
+**Delete:**	
+```bash
+docker compose down
+```
 
 
 ## Optimization (refactoring and quality standards)
@@ -139,15 +152,16 @@ pip install pylint-runner
 Exec in root folder: 
 pylint_runner
 
-### Monitoring
+## Monitoring
 
 **End-to-end distributed tracing.** Control of systems based on microservices, ease of analyzing the behavior of an application and thus solving possible errors or problems
 
-## Jaeger
+### Jaeger
 
 Docker: Getting Started — Jaeger documentation (jaegertracing.io)
-
+```bash
 docker run --rm --name jaeger   -e COLLECTOR_ZIPKIN_HOST_PORT=:9411   -p 6831:6831/udp   -p 6832:6832/udp   -p 5778:5778   -p 16686:16686   -p 4317:4317   -p 4318:4318   -p 14250:14250   -p 14268:14268   -p 14269:14269   -p 9411:9411   jaegertracing/all-in-one:1.51
+```
 
 http://192.168.1.127:16686/
 
@@ -166,13 +180,7 @@ JWT: (json web token) encapsulate and share claims (request features).
 [parts of a token (jwt.io)](jwt.io)
 
 
-## Additional. use Ubuntu in Windows
 
-Execute power shell as administrator:
-wsl --install
-restart
-  username: miubuntu
-  password: dfgh1278% 
 
 ## Tech Stack
 
@@ -185,3 +193,25 @@ https://www.starlette.io/
 **Author:** Giovanni Junco
 
 **Since:** 07-03-2024
+
+## Additional 
+
+### Use Ubuntu in Windows
+
+Execute power shell as administrator:
+```bash
+wsl --install
+```
+
+restart windows system
+
+  username: miubuntu
+
+  password: dfgh1278% 
+
+### Postman
+![Postman](/postman.png)
+
+
+
+

@@ -86,7 +86,7 @@ graphql = CORSMiddleware( GraphQL(
 async def ref(request):
     ''' Info micro_service, useful to validate connection'''
     return JSONResponse({
-        "Author": "auditando.co",
+        "Author": "Templates",
         "project": "GraphQL Backend",
         "version": "0.1",
         "contributor": ["Giovanni Junco"]
