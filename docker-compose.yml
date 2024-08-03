@@ -1,4 +1,3 @@
-
 version: "3.9"
 services:    
     graphql:        
@@ -7,17 +6,7 @@ services:
             - "5000:5000"
         links: 
             - mongodb             
-    mongodb:        
-        image: mongo
+    redis_cache:        
+        image: redis
         ports:
-            - "27017:27017"
-        environment:
-            - MONGO_INITDB_ROOT_USERNAME=orderadmin
-            - MONGO_INITDB_ROOT_PASSWORD=tu_password
-        volumes:
-            - mongo-data:/data/db
-            # mysql -> /var/lib/mysql
-            #postgres -> /var/lib/postgresql/data
-
-volumes:
-    mongo-data:
+            - "6379:6379"
